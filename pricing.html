@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BrainX - Service Tiers</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@400;700&display=swap"
+        rel="stylesheet">
+    <!-- Razorpay Check out Script -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <style>
+        .pricing-layout {
+            padding: 5rem 5%;
+            text-align: center;
+        }
+
+        .pricing-header {
+            margin-bottom: 4rem;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            padding: 3rem 2rem;
+            border-radius: 16px;
+            position: relative;
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .pricing-card.popular {
+            border: 2px solid var(--neon-blue);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--neon-blue);
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .plan-name {
+            font-family: var(--font-mono);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .plan-price {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+        }
+
+        .currency {
+            font-size: 1.5rem;
+            margin-right: 4px;
+        }
+
+        .interval {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-left: 4px;
+        }
+
+        .plan-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 3rem;
+            flex: 1;
+        }
+
+        .plan-features li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon-check {
+            color: var(--neon-cyan);
+        }
+
+        #payment-msg {
+            margin-top: 2rem;
+            font-family: var(--font-mono);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="particles-container"></div>
+    <div class="cyber-grid"></div>
+
+    <nav class="navbar glass-panel">
+        <div class="logo">
+            <a href="/"><span class="text-neon">Brain</span>X</a>
+        </div>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/pricing.html" class="active">Services</a>
+            <a href="/dashboard.html">Dashboard</a>
+        </div>
+        <div class="nav-actions">
+            <a href="/auth.html" class="btn btn-neon">Access Interface</a>
+        </div>
+    </nav>
+
+    <main class="pricing-layout">
+        <div class="pricing-header">
+            <div class="badge glass-badge"
+                style="color: var(--neon-purple); border-color: rgba(168, 85, 247, 0.2); background: rgba(168, 85, 247, 0.1);">
+                <span class="dot pulse"
+                    style="background-color: var(--neon-purple); box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.7);"></span>
+                Enterprise Grade Security
+            </div>
+            <h1 style="font-size: 3.5rem; margin-bottom: 1rem;">Choose Your <span
+                    class="text-gradient">Protection</span> Level</h1>
+            <p class="text-muted" style="font-size: 1.2rem; max-width: 600px; margin: 0 auto;">Select a plan to start
+                securing your digital assets immediately with BrainX intelligent systems.</p>
+        </div>
+
+        <div class="pricing-grid">
+            <!-- Basic Plan -->
+            <div class="pricing-card glass-panel">
+                <h3 class="plan-name">Basic Recon</h3>
+                <div class="plan-price">
+                    <span class="currency">₹</span>499<span class="interval">/mo</span>
+                </div>
+                <ul class="plan-features">
+                    <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="icon-check"
+                            stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg> Dashboard Access</li>
+                    <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="icon-check"
+                            stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg> Automated Attack Reporting</li>
+                    <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="icon-check"
+                            stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg> Basic Cyber Awareness Modules</li>
+                </ul>
+                <button class="btn btn-outline pay-btn" data-amount="499" data-plan="Basic Recon">Initialize Basic
+                    Protocol</button>
+            </div>
+
+            <!-- Pro Plan -->
+            <div class="pricing-card glass-panel popular">
+                <div class="popular-badge">RECOMMENDED</div>
+                <h3 class="plan-name text-neon">Advanced Shield</h3>
+                <div class="plan-price">
+                    <span class="currency">₹</span>1499<span class="interval">/mo</span>
+                </div>
+                <ul class="plan-features">
+                    <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="icon-check"
+                            stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg> Everything in Basic</li>
+                    <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="icon-check"
+                            stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg> Priority Incident Analysis</li>
+                    <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="icon-check"
+                            stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg> Direct Chat with Ethical Hackers</li>
+                    <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="icon-check"
+                            stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg> Weekly Vulnerability Scans</li>
+                </ul>
+                <button class="btn btn-neon pay-btn" data-amount="1499" data-plan="Advanced Shield">Initialize Advanced
+                    Protocol</button>
+            </div>
+
+            <!-- Enterprise Plan -->
+            <div class="pricing-card glass-panel">
+                <h3 class="plan-name" style="color: var(--neon-purple);">Zero Day Elite</h3>
+                <div class="plan-price">
+                    <span class="currency">₹</span>4999<span class="interval">/mo</span>
+                </div>
+                <ul class="plan-features">
+                    <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="icon-check"
+                            stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg> Everything in Pro</li>
+                    <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="icon-check"
+                            stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg> Dedicated 24/7 Response Team</li>
+                    <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="icon-check"
+                            stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg> Custom Penetration Testing</li>
+                    <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" class="icon-check"
+                            stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12" />
+                        </svg> Automated Threat Mitigation</li>
+                </ul>
+                <button class="btn btn-outline pay-btn" data-amount="4999" data-plan="Zero Day Elite"
+                    style="border-color: var(--neon-purple); color: var(--neon-purple);">Initialize Elite
+                    Protocol</button>
+            </div>
+        </div>
+
+        <div id="payment-msg"></div>
+
+    </main>
+
+    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/particles.js"></script>
+    <script type="module" src="/src/pricing.js"></script>
+</body>
+
+</html>

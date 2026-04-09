@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BrainX - Admin Terminal</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        .admin-layout {
+            padding: 2rem 5%;
+            min-height: calc(100vh - 80px);
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .panel {
+            padding: 1.5rem;
+        }
+
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th,
+        td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        th {
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-family: var(--font-mono);
+        }
+
+        .status-pending {
+            background: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+            border: 1px solid #f59e0b;
+        }
+
+        .status-investigating {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--neon-blue);
+            border: 1px solid var(--neon-blue);
+        }
+
+        .status-resolved {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            border: 1px solid #10b981;
+        }
+
+        .action-btn {
+            background: transparent;
+            border: 1px solid var(--border-glass);
+            color: var(--text-main);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .action-btn:hover {
+            border-color: var(--neon-blue);
+            color: var(--neon-blue);
+        }
+
+        #error-msg {
+            color: #ef4444;
+            text-align: center;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="particles-container"></div>
+    <div class="cyber-grid"></div>
+
+    <nav class="navbar glass-panel">
+        <div class="logo">
+            <a href="/"><span class="text-neon">Brain</span>X <span
+                    style="font-size: 0.8rem; color: #ef4444;">[ADMIN]</span></a>
+        </div>
+        <div class="nav-actions">
+            <a href="/dashboard.html" class="btn btn-outline" style="font-size: 0.8rem; padding: 0.4rem 1rem;">Back to
+                Dashboard</a>
+        </div>
+    </nav>
+
+    <main class="admin-layout" id="main-content" style="display: none;">
+        <div class="admin-header">
+            <h2>System Administration</h2>
+            <div class="badge glass-badge"
+                style="color: #ef4444; border-color: rgba(239, 68, 68, 0.2); background: rgba(239, 68, 68, 0.1);">
+                <span class="dot pulse"
+                    style="background-color: #ef4444; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);"></span>
+                God Mode Enabled
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <!-- Reports Management -->
+            <section class="panel glass-panel">
+                <h3 style="font-family: var(--font-mono); margin-bottom: 0.5rem;">Incident Reports Queue</h3>
+                <p class="text-muted" style="margin-bottom: 1.5rem; font-size: 0.9rem;">Manage and update status of
+                    user-submitted cyberattacks.</p>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>User</th>
+                                <th>Type</th>
+                                <th>Target</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-reports-list">
+                            <tr>
+                                <td colspan="6" class="text-muted" style="text-align:center;">Loading reports data...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Users Directory -->
+            <section class="panel glass-panel">
+                <h3 style="font-family: var(--font-mono); margin-bottom: 0.5rem;">User Directory</h3>
+                <p class="text-muted" style="margin-bottom: 1.5rem; font-size: 0.9rem;">List of all registered agents
+                    and hackers.</p>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Joined</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Clearance Role</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-users-list">
+                            <tr>
+                                <td colspan="4" class="text-muted" style="text-align:center;">Loading user data...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <div id="error-msg"></div>
+
+    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/particles.js"></script>
+    <script type="module" src="/src/admin.js"></script>
+</body>
+
+</html>

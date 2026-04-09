@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BrainX - Hacker Verification</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        .portal-layout {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 5%;
+        }
+
+        .portal-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glass);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--neon-purple);
+            box-shadow: 0 0 10px var(--neon-purple-glow);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .upload-area {
+            border: 2px dashed var(--border-glass);
+            padding: 3rem;
+            text-align: center;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .upload-area:hover,
+        .upload-area.dragover {
+            border-color: var(--neon-purple);
+            background: rgba(168, 85, 247, 0.05);
+        }
+
+        .upload-icon {
+            color: var(--neon-purple);
+            margin-bottom: 1rem;
+        }
+
+        #file-input {
+            display: none;
+        }
+
+        .btn-purple {
+            background: var(--neon-purple);
+            color: #fff;
+            border: none;
+            box-shadow: 0 0 15px var(--neon-purple-glow);
+        }
+
+        .btn-purple:hover {
+            background: #fff;
+            color: #000;
+            box-shadow: 0 0 25px var(--neon-purple-glow), 0 0 10px #fff;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="particles-container"></div>
+    <div class="cyber-grid" style="opacity: 0.15;"></div>
+
+    <nav class="navbar glass-panel">
+        <div class="logo">
+            <a href="/"><span class="text-neon">Brain</span>X</a>
+        </div>
+        <div class="nav-actions">
+            <a href="/" class="btn btn-outline" style="font-size: 0.8rem; padding: 0.4rem 1rem;">Back</a>
+        </div>
+    </nav>
+
+    <main class="portal-layout">
+        <div class="portal-header">
+            <h1 style="color: var(--neon-purple); text-shadow: 0 0 15px var(--neon-purple-glow);">Agent Onboarding</h1>
+            <p class="text-muted" style="max-width: 500px; margin: 1rem auto;">Join our network of elite ethical
+                hackers. Submit your credentials to gain Level 2 clearance to the BrainX network.</p>
+        </div>
+
+        <div class="glass-panel" style="padding: 2.5rem;">
+            <form id="hacker-form">
+                <div class="form-group">
+                    <label>Operating Alias / Handle</label>
+                    <input type="text" class="form-control" required placeholder="ZeroDay" />
+                </div>
+
+                <div class="form-group">
+                    <label>Primary Expertise</label>
+                    <select class="form-control" required>
+                        <option value="network">Network Security & Infrastructure</option>
+                        <option value="web">Web Application Security</option>
+                        <option value="malware">Malware Analysis & RE</option>
+                        <option value="crypto">Cryptography</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Certifications (CEH, OSCP, CISSP)</label>
+                    <input type="text" class="form-control" placeholder="e.g. OSCP, CompTIA Security+" />
+                </div>
+
+                <div class="form-group">
+                    <label>Upload Verification Document (PDF/Image mockup)</label>
+                    <div class="upload-area" id="drop-zone">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" class="upload-icon"
+                            stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="17 8 12 3 7 8" />
+                            <line x1="12" y1="3" x2="12" y2="15" />
+                        </svg>
+                        <p>Click or drag file to upload clearance documentation</p>
+                        <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;" id="file-name">No
+                            file selected</p>
+                        <input type="file" id="file-input" accept=".pdf,image/*">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-purple"
+                    style="width: 100%; margin-top: 1rem; padding: 1rem; font-size: 1.1rem;">Submit for
+                    Verification</button>
+
+                <div id="status-message" style="margin-top: 1.5rem; text-align: center; font-size: 0.9rem;"></div>
+            </form>
+        </div>
+    </main>
+
+    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/particles.js"></script>
+    <script>
+        // Simple Mock Verification Logic
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-input');
+        const fileName = document.getElementById('file-name');
+        const form = document.getElementById('hacker-form');
+        const statusMsg = document.getElementById('status-message');
+
+        dropZone.addEventListener('click', () => fileInput.click());
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                fileName.textContent = "Attached: " + e.target.files[0].name;
+                fileName.style.color = "var(--neon-purple)";
+            }
+        });
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = form.querySelector('button');
+
+            btn.textContent = 'Encrypting & Transmitting...';
+            btn.disabled = true;
+
+            // Mock API Call delay
+            setTimeout(() => {
+                statusMsg.innerHTML = '<span style="color: #10b981;">Transmission Successful. Your clearance request is under review by BrainX administrators.</span>';
+                btn.textContent = 'Submit for Verification';
+                btn.disabled = false;
+                form.reset();
+                fileName.textContent = "No file selected";
+                fileName.style.color = "var(--text-muted)";
+            }, 2000);
+        });
+    </script>
+</body>
+
+</html>
